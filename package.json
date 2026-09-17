@@ -1,14 +1,14 @@
-
-  {
-    "engines": {
-      "node": "18.16.0"
-    },
+{
   "name": "wanderlust",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "engines": {
+    "node": "24.x"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +28,6 @@
     "joi": "^18.2.9",
     "method-override": "^3.0.0",
     "mongoose": "^9.9.5",
-    "moongose": "^1.0.0",
     "multer": "^2.3.0",
     "openai": "^7.15.0",
     "passport": "^0.7.0",
