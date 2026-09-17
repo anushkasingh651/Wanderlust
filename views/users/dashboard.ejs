@@ -1,0 +1,532 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container py-5">
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <div class="mb-5">
+
+        <h1 class="fw-bold">
+            My Dashboard
+        </h1>
+
+        <p class="text-muted">
+            Welcome back, <%= user.username %>!
+        </p>
+
+    </div>
+
+
+    <!-- ==========================================
+         STATS
+    =========================================== -->
+
+    <div class="row g-4 mb-5">
+
+        <!-- MY LISTINGS -->
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                My Listings
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                <%= myListings.length %>
+                            </h2>
+
+                        </div>
+
+                        <div class="fs-2">
+                            🏠
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WISHLIST -->
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Wishlist
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                <%= wishlist.length %>
+                            </h2>
+
+                        </div>
+
+                        <div class="fs-2">
+                            ❤️
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOOKINGS -->
+
+        <div class="col-md-4">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex justify-content-between">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                My Bookings
+                            </p>
+
+                            <h2 class="fw-bold mb-0">
+                                <%= bookings.length %>
+                            </h2>
+
+                        </div>
+
+                        <div class="fs-2">
+                            📅
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================================
+         WISHLIST
+    =========================================== -->
+
+    <div class="mb-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <div>
+
+                <h3 class="fw-bold mb-1">
+                    ❤️ My Wishlist
+                </h3>
+
+                <p class="text-muted mb-0">
+                    Properties you saved for later.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <% if (!wishlist || wishlist.length === 0) { %>
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body text-center py-5">
+
+                    <div class="fs-1 mb-3">
+                        🤍
+                    </div>
+
+                    <h4 class="fw-bold">
+                        Your wishlist is empty
+                    </h4>
+
+                    <p class="text-muted">
+                        Save properties you love and find them here later.
+                    </p>
+
+                    <a
+                        href="/listing"
+                        class="btn btn-dark"
+                    >
+                        Explore Properties
+                    </a>
+
+                </div>
+
+            </div>
+
+        <% } else { %>
+
+
+            <div class="row g-4">
+
+                <% wishlist.forEach(listing => { %>
+
+                    <% if (listing) { %>
+
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+
+                            <div class="card border-0 shadow-sm h-100 overflow-hidden">
+
+
+                                <!-- IMAGE -->
+
+                                <a
+                                    href="/listing/<%= listing._id %>"
+                                    class="text-decoration-none"
+                                >
+
+                                    <% if (
+                                        listing.image &&
+                                        listing.image.url
+                                    ) { %>
+
+                                        <img
+                                            src="<%= listing.image.url %>"
+                                            alt="<%= listing.title %>"
+                                            class="w-100"
+                                            style="height:220px; object-fit:cover;"
+                                        >
+
+                                    <% } else { %>
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center bg-light"
+                                            style="height:220px;"
+                                        >
+                                            <span class="fs-1">
+                                                🏡
+                                            </span>
+                                        </div>
+
+                                    <% } %>
+
+                                </a>
+
+
+                                <!-- CONTENT -->
+
+                                <div class="card-body">
+
+                                    <h5 class="fw-bold mb-1">
+
+                                        <%= listing.title %>
+
+                                    </h5>
+
+
+                                    <p class="text-muted small mb-2">
+
+                                        <i class="fa-solid fa-location-dot me-1"></i>
+
+                                        <%= listing.location %>,
+                                        <%= listing.country %>
+
+                                    </p>
+
+
+                                    <% if (listing.propertyType) { %>
+
+                                        <span class="badge bg-light text-dark border mb-2">
+
+                                            <%= listing.propertyType %>
+
+                                        </span>
+
+                                    <% } %>
+
+
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+
+                                        <div>
+
+                                            <strong>
+
+                                                ₹<%= Number(
+                                                    listing.price
+                                                ).toLocaleString("en-IN") %>
+
+                                            </strong>
+
+                                            <span class="text-muted small">
+                                                / night
+                                            </span>
+
+                                        </div>
+
+
+                                        <a
+                                            href="/listing/<%= listing._id %>"
+                                            class="btn btn-sm btn-outline-dark"
+                                        >
+                                            View
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <% } %>
+
+                <% }) %>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+
+    <!-- ==========================================
+         MY LISTINGS
+    =========================================== -->
+
+    <div class="mb-5">
+
+        <h3 class="fw-bold mb-3">
+            🏠 My Listings
+        </h3>
+
+
+        <% if (!myListings || myListings.length === 0) { %>
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body text-center py-4">
+
+                    <p class="text-muted mb-3">
+                        You haven't created any listings yet.
+                    </p>
+
+                    <a
+                        href="/listing/new"
+                        class="btn btn-dark"
+                    >
+                        Add Listing
+                    </a>
+
+                </div>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="row g-4">
+
+                <% myListings.forEach(listing => { %>
+
+                    <div class="col-md-4">
+
+                        <div class="card border-0 shadow-sm h-100">
+
+                            <% if (
+                                listing.image &&
+                                listing.image.url
+                            ) { %>
+
+                                <img
+                                    src="<%= listing.image.url %>"
+                                    class="card-img-top"
+                                    style="height:200px; object-fit:cover;"
+                                >
+
+                            <% } %>
+
+
+                            <div class="card-body">
+
+                                <h5 class="fw-bold">
+                                    <%= listing.title %>
+                                </h5>
+
+                                <p class="text-muted">
+                                    <%= listing.location %>,
+                                    <%= listing.country %>
+                                </p>
+
+                                <a
+                                    href="/listing/<%= listing._id %>"
+                                    class="btn btn-outline-dark btn-sm"
+                                >
+                                    View Listing
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+
+    <!-- ==========================================
+         BOOKINGS
+    =========================================== -->
+
+    <div>
+
+        <h3 class="fw-bold mb-3">
+            📅 My Bookings
+        </h3>
+
+
+        <% if (!bookings || bookings.length === 0) { %>
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body text-center py-4">
+
+                    <p class="text-muted mb-0">
+                        You don't have any bookings yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+        <% } else { %>
+
+            <div class="row g-4">
+
+                <% bookings.forEach(booking => { %>
+
+                    <% if (booking.listing) { %>
+
+                        <div class="col-md-6">
+
+                            <div class="card border-0 shadow-sm">
+
+                                <div class="card-body">
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <div>
+
+                                            <h5 class="fw-bold">
+
+                                                <%= booking.listing.title %>
+
+                                            </h5>
+
+                                            <p class="text-muted mb-1">
+
+                                                <%= booking.listing.location %>,
+                                                <%= booking.listing.country %>
+
+                                            </p>
+
+                                        </div>
+
+
+                                        <span class="badge
+                                            <%= booking.status === 'confirmed'
+                                                ? 'bg-success'
+                                                : 'bg-secondary'
+                                            %>
+                                        ">
+
+                                            <%= booking.status %>
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <hr>
+
+
+                                    <p class="mb-1">
+
+                                        <strong>
+                                            Check-in:
+                                        </strong>
+
+                                        <%= new Date(
+                                            booking.checkIn
+                                        ).toLocaleDateString("en-IN") %>
+
+                                    </p>
+
+
+                                    <p class="mb-1">
+
+                                        <strong>
+                                            Check-out:
+                                        </strong>
+
+                                        <%= new Date(
+                                            booking.checkOut
+                                        ).toLocaleDateString("en-IN") %>
+
+                                    </p>
+
+
+                                    <p class="mb-0">
+
+                                        <strong>
+                                            Total:
+                                        </strong>
+
+                                        ₹<%= Number(
+                                            booking.totalPrice
+                                        ).toLocaleString("en-IN") %>
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <% } %>
+
+                <% }) %>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>

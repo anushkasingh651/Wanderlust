@@ -1,0 +1,618 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container py-5">
+
+
+    <!-- ==================================================
+         HEADER
+    =================================================== -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="display-5 fw-bold">
+                Explore unique stays
+            </h1>
+
+            <p class="text-muted">
+                Discover beautiful places for your next journey.
+            </p>
+
+        </div>
+
+
+        <% if (currentUser) { %>
+
+            <a
+                href="/listing/new"
+                class="btn btn-dark"
+            >
+                <i class="fa-solid fa-plus me-2"></i>
+                Add Listing
+            </a>
+
+        <% } else { %>
+
+            <a
+                href="/login"
+                class="btn btn-dark"
+            >
+                Login to Host
+            </a>
+
+        <% } %>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         SEARCH + FILTER CARD
+    =================================================== -->
+
+    <div class="card shadow-sm border-0 mb-5">
+
+        <div class="card-body p-4">
+
+
+            <!-- SEARCH HEADER -->
+
+            <div class="mb-3">
+
+                <h5 class="fw-bold mb-1">
+
+                    <i class="fa-solid fa-sliders me-2"></i>
+
+                    Find your perfect stay
+
+                </h5>
+
+                <p class="text-muted small mb-0">
+
+                    Search and filter properties based on your preferences.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- SEARCH FORM -->
+
+            <form
+                action="/listing"
+                method="GET"
+            >
+
+
+                <!-- ======================================
+                     FIRST ROW
+                ======================================= -->
+
+                <div class="row g-3">
+
+
+                    <!-- LOCATION -->
+
+                    <div class="col-12 col-md-4">
+
+                        <label
+                            class="form-label fw-semibold"
+                        >
+
+                            <i class="fa-solid fa-location-dot me-1"></i>
+
+                            Location
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            class="form-control"
+                            placeholder="Search city or country"
+                            value="<%= filters?.location || '' %>"
+                        >
+
+                    </div>
+
+
+
+                    <!-- MIN PRICE -->
+
+                    <div class="col-6 col-md-2">
+
+                        <label
+                            class="form-label fw-semibold"
+                        >
+                            Min Price
+                        </label>
+
+                        <input
+                            type="number"
+                            name="minPrice"
+                            class="form-control"
+                            placeholder="₹ Min"
+                            min="0"
+                            value="<%= filters?.minPrice || '' %>"
+                        >
+
+                    </div>
+
+
+
+                    <!-- MAX PRICE -->
+
+                    <div class="col-6 col-md-2">
+
+                        <label
+                            class="form-label fw-semibold"
+                        >
+                            Max Price
+                        </label>
+
+                        <input
+                            type="number"
+                            name="maxPrice"
+                            class="form-control"
+                            placeholder="₹ Max"
+                            min="0"
+                            value="<%= filters?.maxPrice || '' %>"
+                        >
+
+                    </div>
+
+
+
+                    <!-- GUESTS -->
+
+                    <div class="col-6 col-md-2">
+
+                        <label
+                            class="form-label fw-semibold"
+                        >
+
+                            <i class="fa-solid fa-users me-1"></i>
+
+                            Guests
+
+                        </label>
+
+                        <input
+                            type="number"
+                            name="guests"
+                            class="form-control"
+                            placeholder="Guests"
+                            min="1"
+                            max="20"
+                            value="<%= filters?.guests || '' %>"
+                        >
+
+                    </div>
+
+
+
+                    <!-- SEARCH BUTTON -->
+
+                    <div class="col-6 col-md-2 d-flex align-items-end">
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark w-100"
+                        >
+
+                            <i class="fa-solid fa-magnifying-glass me-1"></i>
+
+                            Search
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ======================================
+                     SECOND ROW
+                ======================================= -->
+
+                <div class="row g-3 mt-1">
+
+
+                    <!-- PROPERTY TYPE -->
+
+                    <div class="col-12 col-md-3">
+
+                        <label
+                            class="form-label fw-semibold"
+                        >
+                            Property Type
+                        </label>
+
+
+                        <select
+                            name="propertyType"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                All Property Types
+                            </option>
+
+
+                            <option
+                                value="Apartment"
+                                <%= filters?.propertyType === "Apartment" ? "selected" : "" %>
+                            >
+                                Apartment
+                            </option>
+
+
+                            <option
+                                value="Villa"
+                                <%= filters?.propertyType === "Villa" ? "selected" : "" %>
+                            >
+                                Villa
+                            </option>
+
+
+                            <option
+                                value="House"
+                                <%= filters?.propertyType === "House" ? "selected" : "" %>
+                            >
+                                House
+                            </option>
+
+
+                            <option
+                                value="Hotel"
+                                <%= filters?.propertyType === "Hotel" ? "selected" : "" %>
+                            >
+                                Hotel
+                            </option>
+
+
+                            <option
+                                value="Cabin"
+                                <%= filters?.propertyType === "Cabin" ? "selected" : "" %>
+                            >
+                                Cabin
+                            </option>
+
+
+                            <option
+                                value="Farmhouse"
+                                <%= filters?.propertyType === "Farmhouse" ? "selected" : "" %>
+                            >
+                                Farmhouse
+                            </option>
+
+
+                            <option
+                                value="Other"
+                                <%= filters?.propertyType === "Other" ? "selected" : "" %>
+                            >
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- SORT -->
+
+                    <div class="col-12 col-md-3">
+
+                        <label
+                            class="form-label fw-semibold"
+                        >
+                            Sort By
+                        </label>
+
+
+                        <select
+                            name="sort"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Recommended
+                            </option>
+
+
+                            <option
+                                value="price-low"
+                                <%= filters?.sort === "price-low" ? "selected" : "" %>
+                            >
+                                Price: Low → High
+                            </option>
+
+
+                            <option
+                                value="price-high"
+                                <%= filters?.sort === "price-high" ? "selected" : "" %>
+                            >
+                                Price: High → Low
+                            </option>
+
+
+                            <option
+                                value="newest"
+                                <%= filters?.sort === "newest" ? "selected" : "" %>
+                            >
+                                Newest
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- CLEAR -->
+
+                    <div class="col-12 col-md-2 d-flex align-items-end">
+
+                        <a
+                            href="/listing"
+                            class="btn btn-outline-secondary w-100"
+                        >
+
+                            <i class="fa-solid fa-xmark me-1"></i>
+
+                            Clear
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         NO LISTINGS
+    =================================================== -->
+
+    <% if (!allListings || allListings.length === 0) { %>
+
+        <div class="text-center py-5">
+
+            <div class="fs-1 mb-3">
+                🏡
+            </div>
+
+            <h2>
+                No listings found
+            </h2>
+
+            <p class="text-muted">
+                Try changing your search filters.
+            </p>
+
+
+            <% if (currentUser) { %>
+
+                <a
+                    href="/listing/new"
+                    class="btn btn-dark"
+                >
+                    Add Your First Listing
+                </a>
+
+            <% } else { %>
+
+                <a
+                    href="/login"
+                    class="btn btn-dark"
+                >
+                    Login to Host
+                </a>
+
+            <% } %>
+
+        </div>
+
+
+    <% } else { %>
+
+
+
+        <!-- ==================================================
+             RESULT COUNT
+        =================================================== -->
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <p class="text-muted mb-0">
+
+                <strong>
+                    <%= allListings.length %>
+                </strong>
+
+                <%= allListings.length === 1
+                    ? "property"
+                    : "properties"
+                %>
+
+                found
+
+            </p>
+
+        </div>
+
+
+
+        <!-- ==================================================
+             LISTING GRID
+        =================================================== -->
+
+        <div class="row g-4">
+
+
+            <% allListings.forEach(listing => { %>
+
+
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+
+
+                    <div class="listing-card h-100">
+
+
+                        <!-- IMAGE -->
+
+                        <a
+                            href="/listing/<%= listing._id %>"
+                            class="text-decoration-none"
+                        >
+
+                            <% if (
+                                listing.image &&
+                                listing.image.url
+                            ) { %>
+
+                                <img
+                                    src="<%= listing.image.url %>"
+                                    alt="<%= listing.title %>"
+                                    class="listing-image"
+                                >
+
+                            <% } else { %>
+
+                                <div class="listing-image-placeholder">
+                                    🏡
+                                </div>
+
+                            <% } %>
+
+                        </a>
+
+
+
+                        <!-- CONTENT -->
+
+                        <div class="p-3">
+
+
+                            <!-- TITLE -->
+
+                            <h5 class="fw-bold mb-1">
+
+                                <%= listing.title %>
+
+                            </h5>
+
+
+
+                            <!-- LOCATION -->
+
+                            <p class="text-muted mb-2">
+
+                                <i class="fa-solid fa-location-dot me-1"></i>
+
+                                <%= listing.location %>,
+                                <%= listing.country %>
+
+                            </p>
+
+
+
+                            <!-- PROPERTY TYPE -->
+
+                            <% if (listing.propertyType) { %>
+
+                                <span
+                                    class="badge bg-light text-dark border mb-2"
+                                >
+
+                                    <%= listing.propertyType %>
+
+                                </span>
+
+                            <% } %>
+
+
+
+                            <!-- MAX GUESTS -->
+
+                            <% if (listing.maxGuests) { %>
+
+                                <small
+                                    class="text-muted d-block mb-2"
+                                >
+
+                                    <i class="fa-solid fa-users me-1"></i>
+
+                                    Up to
+                                    <%= listing.maxGuests %>
+                                    guests
+
+                                </small>
+
+                            <% } %>
+
+
+
+                            <!-- PRICE + VIEW -->
+
+                            <div
+                                class="d-flex justify-content-between align-items-center"
+                            >
+
+                                <div>
+
+                                    <strong>
+
+                                        ₹<%= Number(
+                                            listing.price
+                                        ).toLocaleString("en-IN") %>
+
+                                    </strong>
+
+                                    <span class="text-muted">
+
+                                        / night
+
+                                    </span>
+
+                                </div>
+
+
+                                <a
+                                    href="/listing/<%= listing._id %>"
+                                    class="btn btn-sm btn-outline-dark"
+                                >
+
+                                    View
+
+                                </a>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            <% }) %>
+
+
+        </div>
+
+
+    <% } %>
+
+</div>

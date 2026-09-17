@@ -1,0 +1,328 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="auth-shell">
+
+    <!-- ================= LEFT TRAVEL PANEL ================= -->
+
+    <div class="auth-visual signup-visual">
+
+        <div class="visual-overlay"></div>
+
+        <div class="visual-content">
+
+            <div class="travel-brand">
+
+                <div class="brand-mark">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+
+                <div>
+
+                    <div class="brand-name">
+                        Wanderlust
+                    </div>
+
+                    <div class="brand-subtitle">
+                        STAYS · EXPERIENCES · PEOPLE
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="visual-message">
+
+                <span class="eyebrow">
+                    YOUR STORY STARTS HERE
+                </span>
+
+                <h2>
+                    Go somewhere<br>
+                    <strong>you've never been.</strong>
+                </h2>
+
+                <p>
+                    Join a community of travelers discovering
+                    extraordinary places and creating memories
+                    worth keeping.
+                </p>
+
+            </div>
+
+
+            <div class="destination-card">
+
+                <div class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        Wander somewhere beautiful
+                    </span>
+
+                    <strong>
+                        Bali, Indonesia
+                    </strong>
+
+                    <small>
+                        Your next chapter could start here.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= RIGHT SIGNUP PANEL ================= -->
+
+    <div class="auth-form-panel">
+
+        <div class="auth-top-link">
+
+            <span>
+                Already have an account?
+            </span>
+
+            <a href="/login">
+                Log in
+            </a>
+
+        </div>
+
+
+        <div class="auth-form-container">
+
+            <div class="mobile-auth-logo">
+                <i class="fa-solid fa-compass"></i>
+            </div>
+
+            <span class="auth-eyebrow">
+                JOIN WANDERLUST
+            </span>
+
+            <h1>
+                Create your account <span>✨</span>
+            </h1>
+
+            <p class="auth-description">
+                Start discovering places you'll never forget.
+            </p>
+
+
+            <!-- SIGNUP FORM -->
+
+            <form action="/signup" method="POST">
+
+                <!-- USERNAME -->
+
+                <div class="premium-input-group">
+
+                    <label for="signupUsername">
+                        Username
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <input
+                            type="text"
+                            id="signupUsername"
+                            name="username"
+                            placeholder="Choose a username"
+                            required
+                            autocomplete="username"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="premium-input-group">
+
+                    <label for="signupEmail">
+                        Email address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-regular fa-envelope"></i>
+
+                        <input
+                            type="email"
+                            id="signupEmail"
+                            name="email"
+                            placeholder="you@example.com"
+                            required
+                            autocomplete="email"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="premium-input-group">
+
+                    <label for="signupPassword">
+                        Password
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            type="password"
+                            id="signupPassword"
+                            name="password"
+                            placeholder="Create a password"
+                            required
+                            minlength="6"
+                            autocomplete="new-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('signupPassword', this)"
+                        >
+
+                            <i class="fa-regular fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                    <small class="password-hint">
+                        At least 6 characters
+                    </small>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <label class="terms-row">
+
+                    <input
+                        type="checkbox"
+                        required
+                    >
+
+                    <span>
+                        I agree to the
+                        <a href="#">Terms</a>
+                        and
+                        <a href="#">Privacy Policy</a>
+                    </span>
+
+                </label>
+
+
+                <!-- SIGNUP BUTTON -->
+
+                <button
+                    type="submit"
+                    class="premium-auth-btn"
+                >
+
+                    <span>
+                        Create account
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <!-- DIVIDER -->
+
+            <div class="premium-divider">
+
+                <span></span>
+
+                <small>OR</small>
+
+                <span></span>
+
+            </div>
+
+            <p class="auth-bottom-text">
+
+                Already a Wanderer?
+
+                <a href="/login">
+                    Log in
+                </a>
+
+            </p>
+
+
+            <div class="auth-security">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>
+                    Your information is securely protected
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="auth-decoration">
+            <i class="fa-solid fa-mountain-sun"></i>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function togglePassword(inputId, button) {
+
+    const input =
+        document.getElementById(inputId);
+
+    const icon =
+        button.querySelector("i");
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove("fa-eye");
+
+        icon.classList.add("fa-eye-slash");
+
+    } else {
+
+        input.type = "password";
+
+        icon.classList.remove("fa-eye-slash");
+
+        icon.classList.add("fa-eye");
+
+    }
+
+}
+
+</script>

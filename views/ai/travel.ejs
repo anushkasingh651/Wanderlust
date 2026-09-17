@@ -1,0 +1,216 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <div
+            style="
+                font-size:55px;
+                margin-bottom:10px;
+            "
+        >
+            🤖
+        </div>
+
+        <h1 class="fw-bold">
+            AI Travel Assistant
+        </h1>
+
+        <p class="text-muted">
+            Tell us about your trip and AI will
+            create a personalized itinerary.
+        </p>
+
+    </div>
+
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <form
+                        action="/ai-travel"
+                        method="POST"
+                    >
+
+                        <!-- DESTINATION -->
+
+                        <div class="mb-4">
+
+                            <label
+                                class="form-label fw-bold"
+                            >
+                                📍 Destination
+                            </label>
+
+                            <input
+                                type="text"
+                                name="destination"
+                                class="form-control form-control-lg"
+                                placeholder="e.g. Jaipur"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- DAYS -->
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-4">
+
+                                <label
+                                    class="form-label fw-bold"
+                                >
+                                    🗓️ Number of Days
+                                </label>
+
+                                <input
+                                    type="number"
+                                    name="days"
+                                    class="form-control form-control-lg"
+                                    min="1"
+                                    max="30"
+                                    placeholder="e.g. 4"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6 mb-4">
+
+                                <label
+                                    class="form-label fw-bold"
+                                >
+                                    👥 Travelers
+                                </label>
+
+                                <input
+                                    type="number"
+                                    name="travelers"
+                                    class="form-control form-control-lg"
+                                    min="1"
+                                    max="20"
+                                    placeholder="e.g. 2"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BUDGET -->
+
+                        <div class="mb-4">
+
+                            <label
+                                class="form-label fw-bold"
+                            >
+                                💰 Total Budget
+                            </label>
+
+                            <div class="input-group input-group-lg">
+
+                                <span class="input-group-text">
+                                    ₹
+                                </span>
+
+                                <input
+                                    type="number"
+                                    name="budget"
+                                    class="form-control"
+                                    min="500"
+                                    placeholder="e.g. 15000"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- INTERESTS -->
+
+                        <div class="mb-4">
+
+                            <label
+                                class="form-label fw-bold"
+                            >
+                                ❤️ What are you interested in?
+                            </label>
+
+                            <textarea
+                                name="interests"
+                                class="form-control"
+                                rows="4"
+                                placeholder="e.g. forts, cafes, shopping, local food, photography, peaceful places..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- BUTTON -->
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark btn-lg w-100"
+                        >
+
+                            ✨ Generate My Trip
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXAMPLE -->
+
+            <div class="alert alert-light border mt-4">
+
+                <strong>Example:</strong>
+
+                <br>
+
+                Destination:
+                Jaipur
+
+                <br>
+
+                Duration:
+                4 days
+
+                <br>
+
+                Travelers:
+                2
+
+                <br>
+
+                Budget:
+                ₹15,000
+
+                <br>
+
+                Interests:
+                Forts, food, shopping and photography
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

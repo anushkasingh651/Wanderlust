@@ -1,0 +1,199 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <div
+            style="
+                font-size:55px;
+                margin-bottom:10px;
+            "
+        >
+            ✨
+        </div>
+
+        <h1 class="fw-bold">
+            Your AI-Powered Trip
+        </h1>
+
+        <p class="text-muted">
+            Personalized itinerary for
+            <strong><%= destination %></strong>
+        </p>
+
+    </div>
+
+
+    <!-- TRIP SUMMARY -->
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size:30px;">
+                        📍
+                    </div>
+
+                    <small class="text-muted">
+                        Destination
+                    </small>
+
+                    <h5 class="fw-bold mt-2">
+                        <%= destination %>
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size:30px;">
+                        🗓️
+                    </div>
+
+                    <small class="text-muted">
+                        Duration
+                    </small>
+
+                    <h5 class="fw-bold mt-2">
+                        <%= days %> Days
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size:30px;">
+                        👥
+                    </div>
+
+                    <small class="text-muted">
+                        Travelers
+                    </small>
+
+                    <h5 class="fw-bold mt-2">
+                        <%= travelers %>
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size:30px;">
+                        💰
+                    </div>
+
+                    <small class="text-muted">
+                        Budget
+                    </small>
+
+                    <h5 class="fw-bold mt-2">
+                        ₹<%= budget %>
+                    </h5>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- AI RESPONSE -->
+
+    <div class="card shadow border-0">
+
+        <div class="card-header bg-dark text-white p-3">
+
+            <h4 class="mb-0">
+                🤖 AI Travel Plan
+            </h4>
+
+        </div>
+
+
+        <div class="card-body p-4">
+
+            <div
+                id="itinerary"
+                style="
+                    white-space: pre-wrap;
+                    line-height: 1.8;
+                    font-size: 16px;
+                "
+            >
+                <%= itinerary %>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTTONS -->
+
+    <div class="text-center mt-4">
+
+        <a
+            href="/ai-travel"
+            class="btn btn-dark me-2"
+        >
+            🔄 Plan Another Trip
+        </a>
+
+        <a
+            href="/listing"
+            class="btn btn-outline-dark"
+        >
+            🏠 Explore Stays
+        </a>
+
+    </div>
+
+
+    <!-- DISCLAIMER -->
+
+    <div class="alert alert-warning mt-4">
+
+        <strong>Note:</strong>
+
+        AI-generated travel plans are suggestions.
+        Prices, opening hours, availability and travel
+        conditions should be verified before making
+        reservations.
+
+    </div>
+
+</div>

@@ -1,0 +1,266 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5 mb-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body p-4">
+
+                    <h2 class="mb-4">
+                        Edit Listing
+                    </h2>
+
+                    <form
+                        action="/listing/<%= listing._id %>?_method=PUT"
+                        method="POST"
+                        enctype="multipart/form-data"
+                    >
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Title
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="listing[title]"
+                                value="<%= listing.title %>"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Description
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                name="listing[description]"
+                                rows="5"
+                                required
+                            ><%= listing.description %></textarea>
+
+                        </div>
+
+
+                        <!-- CURRENT IMAGE -->
+
+                        <% if (listing.image && listing.image.url) { %>
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Current Image
+                                </label>
+
+                                <div>
+
+                                    <img
+                                        src="<%= listing.image.url %>"
+                                        alt="<%= listing.title %>"
+                                        class="img-fluid rounded"
+                                        style="max-height: 250px;"
+                                    >
+
+                                </div>
+
+                            </div>
+
+                        <% } %>
+
+
+                        <!-- NEW IMAGE -->
+
+                        <div class="mb-3">
+
+                            <label
+                                for="image"
+                                class="form-label"
+                            >
+                                Change Image
+                            </label>
+
+                            <input
+                                type="file"
+                                class="form-control"
+                                id="image"
+                                name="image"
+                                accept=".jpg,.jpeg,.png,.webp"
+                            >
+
+                            <div class="form-text">
+                                Leave empty to keep the current image.
+                            </div>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Price per night
+                            </label>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="listing[price]"
+                                value="<%= listing.price %>"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Location
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="listing[location]"
+                                value="<%= listing.location %>"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Country
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="listing[country]"
+                                value="<%= listing.country %>"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Property Type
+                            </label>
+
+                            <select
+                                class="form-select"
+                                name="listing[propertyType]"
+                                required
+                            >
+
+                                <option
+                                    value="Apartment"
+                                    <%= listing.propertyType === "Apartment" ? "selected" : "" %>
+                                >
+                                    Apartment
+                                </option>
+
+                                <option
+                                    value="Villa"
+                                    <%= listing.propertyType === "Villa" ? "selected" : "" %>
+                                >
+                                    Villa
+                                </option>
+
+                                <option
+                                    value="House"
+                                    <%= listing.propertyType === "House" ? "selected" : "" %>
+                                >
+                                    House
+                                </option>
+
+                                <option
+                                    value="Hotel"
+                                    <%= listing.propertyType === "Hotel" ? "selected" : "" %>
+                                >
+                                    Hotel
+                                </option>
+
+                                <option
+                                    value="Cabin"
+                                    <%= listing.propertyType === "Cabin" ? "selected" : "" %>
+                                >
+                                    Cabin
+                                </option>
+
+                                <option
+                                    value="Farmhouse"
+                                    <%= listing.propertyType === "Farmhouse" ? "selected" : "" %>
+                                >
+                                    Farmhouse
+                                </option>
+
+                                <option
+                                    value="Other"
+                                    <%= listing.propertyType === "Other" ? "selected" : "" %>
+                                >
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Maximum Guests
+                            </label>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="listing[maxGuests]"
+                                value="<%= listing.maxGuests %>"
+                                min="1"
+                                max="20"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            class="btn btn-dark w-100"
+                            type="submit"
+                        >
+
+                            <i class="fa-solid fa-pen-to-square"></i>
+
+                            Update Listing
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

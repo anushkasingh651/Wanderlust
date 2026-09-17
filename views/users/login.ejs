@@ -1,0 +1,276 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="auth-shell">
+
+    <!-- ================= LEFT TRAVEL PANEL ================= -->
+
+    <div class="auth-visual login-visual">
+
+        <div class="visual-overlay"></div>
+
+        <div class="visual-content">
+
+            <div class="travel-brand">
+                <div class="brand-mark">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+
+                <div>
+                    <div class="brand-name">Wanderlust</div>
+                    <div class="brand-subtitle">
+                        STAYS · EXPERIENCES · PEOPLE
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="visual-message">
+
+                <span class="eyebrow">
+                    YOUR NEXT ADVENTURE
+                </span>
+
+                <h2>
+                    Not just a trip.<br>
+                    <strong>It's a feeling.</strong>
+                </h2>
+
+                <p>
+                    Discover beautiful stays, hidden places,
+                    and unforgettable experiences around the world.
+                </p>
+
+            </div>
+
+
+            <div class="destination-card">
+
+                <div class="destination-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <div>
+                    <span>Featured destination</span>
+                    <strong>Santorini, Greece</strong>
+                    <small>
+                        Where every sunset feels like a dream.
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= RIGHT LOGIN PANEL ================= -->
+
+    <div class="auth-form-panel">
+
+        <div class="auth-top-link">
+            <span>Don't have an account?</span>
+            <a href="/signup">Sign up</a>
+        </div>
+
+
+        <div class="auth-form-container">
+
+            <div class="mobile-auth-logo">
+                <i class="fa-solid fa-compass"></i>
+            </div>
+
+            <span class="auth-eyebrow">
+                WELCOME BACK
+            </span>
+
+            <h1>
+                Welcome back <span>👋</span>
+            </h1>
+
+            <p class="auth-description">
+                Log in to continue your Wanderlust journey.
+            </p>
+
+
+            <!-- LOGIN FORM -->
+
+            <form action="/login" method="POST">
+
+                <!-- USERNAME -->
+
+                <div class="premium-input-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter your username"
+                            required
+                            autocomplete="username"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="premium-input-group">
+
+                    <div class="label-row">
+
+                        <label for="loginPassword">
+                            Password
+                        </label>
+
+                        <a href="#" class="forgot-link">
+                            Forgot password?
+                        </a>
+
+                    </div>
+
+
+                    <div class="input-wrapper">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                            autocomplete="current-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('loginPassword', this)"
+                        >
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REMEMBER -->
+
+                <div class="remember-row">
+
+                    <label class="remember-label">
+
+                        <input
+                            type="checkbox"
+                            name="remember"
+                        >
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="premium-auth-btn"
+                >
+
+                    <span>Log in</span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <!-- DIVIDER -->
+
+            <div class="premium-divider">
+                <span></span>
+                <small>OR</small>
+                <span></span>
+            </div>
+
+
+            <!-- BOTTOM -->
+
+            <p class="auth-bottom-text">
+
+                New to Wanderlust?
+
+                <a href="/signup">
+                    Create an account
+                </a>
+
+            </p>
+
+
+            <div class="auth-security">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                <span>
+                    Your information is securely protected
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Decorative mountain -->
+
+        <div class="auth-decoration">
+            <i class="fa-solid fa-mountain-sun"></i>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function togglePassword(inputId, button) {
+
+    const input = document.getElementById(inputId);
+    const icon = button.querySelector("i");
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+
+    } else {
+
+        input.type = "password";
+
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+
+    }
+
+}
+
+</script>

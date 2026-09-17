@@ -1,0 +1,296 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5 mb-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow-lg border-0">
+
+                <div class="card-body p-5 text-center">
+
+                    <% if (booking.status === "confirmed") { %>
+
+                        <!-- SUCCESS ICON -->
+
+                        <div class="mb-4">
+
+                            <i
+                                class="fa-solid fa-circle-check text-success"
+                                style="font-size: 70px;"
+                            ></i>
+
+                        </div>
+
+
+                        <!-- HEADING -->
+
+                        <h1 class="fw-bold mb-3">
+                            Booking Confirmed!
+                        </h1>
+
+                        <p class="text-muted mb-4">
+                            Your reservation has been successfully confirmed.
+                        </p>
+
+                    <% } else { %>
+
+                        <!-- CANCELLED ICON -->
+
+                        <div class="mb-4">
+
+                            <i
+                                class="fa-solid fa-calendar-xmark text-danger"
+                                style="font-size: 70px;"
+                            ></i>
+
+                        </div>
+
+
+                        <!-- CANCELLED HEADING -->
+
+                        <h1 class="fw-bold mb-3">
+                            Reservation Cancelled
+                        </h1>
+
+                        <p class="text-muted mb-4">
+                            Your reservation has been cancelled successfully.
+                        </p>
+
+                    <% } %>
+
+
+                    <!-- LISTING INFORMATION -->
+
+                    <div class="card bg-light border-0 mb-4">
+
+                        <div class="card-body">
+
+                            <h3 class="fw-bold">
+
+                                <%= booking.listing.title %>
+
+                            </h3>
+
+                            <p class="text-muted mb-0">
+
+                                <i class="fa-solid fa-location-dot"></i>
+
+                                <%= booking.listing.location %>,
+                                <%= booking.listing.country %>
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BOOKING DETAILS -->
+
+                    <div class="text-start mb-4">
+
+                        <h5 class="fw-bold mb-3">
+                            Reservation Details
+                        </h5>
+
+
+                        <!-- CHECK IN -->
+
+                        <div
+                            class="d-flex justify-content-between border-bottom py-3"
+                        >
+
+                            <span>
+                                <i class="fa-regular fa-calendar"></i>
+                                Check-in
+                            </span>
+
+                            <strong>
+                                <%= new Date(
+                                    booking.checkIn
+                                ).toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric"
+                                    }
+                                ) %>
+                            </strong>
+
+                        </div>
+
+
+                        <!-- CHECK OUT -->
+
+                        <div
+                            class="d-flex justify-content-between border-bottom py-3"
+                        >
+
+                            <span>
+                                <i class="fa-regular fa-calendar"></i>
+                                Check-out
+                            </span>
+
+                            <strong>
+                                <%= new Date(
+                                    booking.checkOut
+                                ).toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric"
+                                    }
+                                ) %>
+                            </strong>
+
+                        </div>
+
+
+                        <!-- GUESTS -->
+
+                        <div
+                            class="d-flex justify-content-between border-bottom py-3"
+                        >
+
+                            <span>
+                                <i class="fa-solid fa-users"></i>
+                                Guests
+                            </span>
+
+                            <strong>
+                                <%= booking.guests %>
+                            </strong>
+
+                        </div>
+
+
+                        <!-- TOTAL PRICE -->
+
+                        <div
+                            class="d-flex justify-content-between border-bottom py-3"
+                        >
+
+                            <span>
+                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                                Total Price
+                            </span>
+
+                            <strong>
+                                ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+                            </strong>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div
+                            class="d-flex justify-content-between py-3"
+                        >
+
+                            <span>
+                                Status
+                            </span>
+
+
+                            <% if (booking.status === "confirmed") { %>
+
+                                <span class="badge bg-success">
+                                    Confirmed
+                                </span>
+
+                            <% } else { %>
+
+                                <span class="badge bg-danger">
+                                    Cancelled
+                                </span>
+
+                            <% } %>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTION BUTTONS -->
+
+                    <div
+                        class="d-flex justify-content-center gap-3 flex-wrap"
+                    >
+
+                        <a
+                            href="/listing/<%= booking.listing._id %>"
+                            class="btn btn-outline-dark"
+                        >
+
+                            <i class="fa-solid fa-arrow-left"></i>
+
+                            Back to Listing
+
+                        </a>
+
+
+                        <a
+                            href="/listing"
+                            class="btn btn-dark"
+                        >
+
+                            <i class="fa-solid fa-house"></i>
+
+                            Explore Listings
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- CANCEL RESERVATION -->
+
+                    <% if (booking.status === "confirmed") { %>
+
+                        <div class="mt-4 pt-3 border-top">
+
+                            <p class="text-muted small mb-2">
+                                Need to change your plans?
+                            </p>
+
+
+                            <form
+                                action="/booking/<%= booking._id %>/cancel?_method=DELETE"
+                                method="POST"
+                                onsubmit="return confirm('Are you sure you want to cancel this reservation?');"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-danger"
+                                >
+
+                                    <i
+                                        class="fa-solid fa-calendar-xmark"
+                                    ></i>
+
+                                    Cancel Reservation
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    <% } %>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

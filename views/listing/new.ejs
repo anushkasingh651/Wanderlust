@@ -1,0 +1,1332 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+
+    .create-page {
+        background: #f7f7f7;
+        min-height: 100vh;
+        padding: 45px 0 80px;
+    }
+
+    .create-header {
+        margin-bottom: 35px;
+    }
+
+    .create-header h1 {
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: #222;
+    }
+
+    .create-header p {
+        color: #777;
+        font-size: 1.05rem;
+    }
+
+    .section-card {
+        background: white;
+        border-radius: 22px;
+        padding: 30px;
+        margin-bottom: 25px;
+        border: 1px solid #e9e9e9;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+    }
+
+    .section-number {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #111;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-right: 12px;
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .section-title h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+
+    .section-title p {
+        margin: 3px 0 0;
+        color: #888;
+        font-size: 0.9rem;
+    }
+
+    /* PROPERTY TYPE */
+
+    .property-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+
+    .property-option {
+        position: relative;
+    }
+
+    .property-option input {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .property-card {
+        border: 2px solid #e5e5e5;
+        border-radius: 16px;
+        padding: 20px 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .property-card:hover {
+        border-color: #111;
+        transform: translateY(-2px);
+    }
+
+    .property-option input:checked + .property-card {
+        border-color: #111;
+        background: #f5f5f5;
+    }
+
+    .property-icon {
+        font-size: 30px;
+        margin-bottom: 8px;
+    }
+
+    .property-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    /* IMAGE UPLOAD */
+
+    .upload-box {
+        border: 2px dashed #bbb;
+        border-radius: 20px;
+        padding: 45px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .upload-box:hover {
+        border-color: #111;
+        background: #fafafa;
+    }
+
+    .upload-icon {
+        font-size: 42px;
+        margin-bottom: 10px;
+    }
+
+    .upload-box h4 {
+        font-weight: 700;
+    }
+
+    .upload-box p {
+        color: #888;
+        margin-bottom: 5px;
+    }
+
+    #imagePreview {
+        display: none;
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 18px;
+        margin-top: 20px;
+    }
+
+    /* INPUTS */
+
+    .form-control,
+    .form-select {
+        min-height: 50px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #111;
+        box-shadow: 0 0 0 3px rgba(0,0,0,0.07);
+    }
+
+    textarea.form-control {
+        min-height: 140px;
+    }
+
+    .input-label {
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    /* AMENITIES */
+
+    .amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .amenity {
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 13px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .amenity:hover {
+        border-color: #111;
+    }
+
+    .amenity input {
+        margin-right: 8px;
+    }
+
+    /* GUEST COUNTER */
+
+    .counter-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid #ddd;
+        border-radius: 14px;
+        padding: 15px 18px;
+    }
+
+    .counter-box strong {
+        font-size: 1.1rem;
+    }
+
+    /* MAP */
+
+    #previewMap {
+        height: 330px;
+        border-radius: 18px;
+        margin-top: 20px;
+        display: none;
+    }
+
+    /* SUBMIT */
+
+    .publish-box {
+        position: sticky;
+        bottom: 20px;
+        background: white;
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        border: 1px solid #eee;
+    }
+
+    .publish-btn {
+        width: 100%;
+        border-radius: 12px;
+        min-height: 55px;
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+
+        .property-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .amenities-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .section-card {
+            padding: 20px;
+        }
+
+    }
+
+</style>
+
+
+<div class="create-page">
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <div class="create-header">
+
+            <h1>✨ Create your stay</h1>
+
+            <p>
+                Turn your space into a place people remember.
+            </p>
+
+        </div>
+
+
+        <form
+            action="/listing"
+            method="POST"
+            enctype="multipart/form-data"
+            id="listingForm"
+        >
+
+
+            <!-- ========================================= -->
+            <!-- 1. PROPERTY TYPE -->
+            <!-- ========================================= -->
+
+            <div class="section-card">
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        1
+                    </div>
+
+                    <div>
+
+                        <h3>What kind of place is it?</h3>
+
+                        <p>
+                            Choose the category that best describes your property.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="property-grid">
+
+
+                    <label class="property-option">
+
+                        <input
+                            type="radio"
+                            name="listing[propertyType]"
+                            value="Apartment"
+                            required
+                        >
+
+                        <div class="property-card">
+
+                            <div class="property-icon">
+                                🏢
+                            </div>
+
+                            <div class="property-name">
+                                Apartment
+                            </div>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="property-option">
+
+                        <input
+                            type="radio"
+                            name="listing[propertyType]"
+                            value="Villa"
+                        >
+
+                        <div class="property-card">
+
+                            <div class="property-icon">
+                                🏡
+                            </div>
+
+                            <div class="property-name">
+                                Villa
+                            </div>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="property-option">
+
+                        <input
+                            type="radio"
+                            name="listing[propertyType]"
+                            value="House"
+                        >
+
+                        <div class="property-card">
+
+                            <div class="property-icon">
+                                🏠
+                            </div>
+
+                            <div class="property-name">
+                                House
+                            </div>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="property-option">
+
+                        <input
+                            type="radio"
+                            name="listing[propertyType]"
+                            value="Hotel"
+                        >
+
+                        <div class="property-card">
+
+                            <div class="property-icon">
+                                🏨
+                            </div>
+
+                            <div class="property-name">
+                                Hotel
+                            </div>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="property-option">
+
+                        <input
+                            type="radio"
+                            name="listing[propertyType]"
+                            value="Cabin"
+                        >
+
+                        <div class="property-card">
+
+                            <div class="property-icon">
+                                🌲
+                            </div>
+
+                            <div class="property-name">
+                                Cabin
+                            </div>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="property-option">
+
+                        <input
+                            type="radio"
+                            name="listing[propertyType]"
+                            value="Farmhouse"
+                        >
+
+                        <div class="property-card">
+
+                            <div class="property-icon">
+                                🌾
+                            </div>
+
+                            <div class="property-name">
+                                Farmhouse
+                            </div>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="property-option">
+
+                        <input
+                            type="radio"
+                            name="listing[propertyType]"
+                            value="Other"
+                        >
+
+                        <div class="property-card">
+
+                            <div class="property-icon">
+                                ✨
+                            </div>
+
+                            <div class="property-name">
+                                Other
+                            </div>
+
+                        </div>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- 2. IMAGE -->
+            <!-- ========================================= -->
+
+            <div class="section-card">
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        2
+                    </div>
+
+                    <div>
+
+                        <h3>Showcase your space</h3>
+
+                        <p>
+                            Great photos help guests imagine themselves there.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label
+                    for="image"
+                    class="upload-box"
+                >
+
+                    <div class="upload-icon">
+                        📸
+                    </div>
+
+                    <h4>
+                        Upload your property photo
+                    </h4>
+
+                    <p>
+                        Click here to choose an image
+                    </p>
+
+                    <small>
+                        JPG, JPEG, PNG or WEBP · Maximum 5MB
+                    </small>
+
+                    <input
+                        type="file"
+                        id="image"
+                        name="image"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        required
+                        hidden
+                    >
+
+                </label>
+
+
+                <img
+                    id="imagePreview"
+                    alt="Property preview"
+                >
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- 3. STORY -->
+            <!-- ========================================= -->
+
+            <div class="section-card">
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        3
+                    </div>
+
+                    <div>
+
+                        <h3>Tell your property's story</h3>
+
+                        <p>
+                            Give travellers a reason to choose your place.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mb-4">
+
+                    <label class="input-label">
+                        Property title
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="listing[title]"
+                        placeholder="Example: Sunset Villa overlooking the Aravalli Hills"
+                        maxlength="100"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label class="input-label">
+                        Description
+                    </label>
+
+                    <textarea
+                        class="form-control"
+                        name="listing[description]"
+                        placeholder="What makes your place special? Tell guests about the experience..."
+                        maxlength="2000"
+                        required
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- 4. LOCATION -->
+            <!-- ========================================= -->
+
+            <div class="section-card">
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        4
+                    </div>
+
+                    <div>
+
+                        <h3>Where is your place?</h3>
+
+                        <p>
+                            We'll automatically locate it on the map.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="input-label">
+                            City / Location
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="location"
+                            name="listing[location]"
+                            placeholder="Jaipur"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="input-label">
+                            Country
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="country"
+                            name="listing[country]"
+                            placeholder="India"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="previewMap"
+                ></div>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- 5. PROPERTY DETAILS -->
+            <!-- ========================================= -->
+
+            <div class="section-card">
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        5
+                    </div>
+
+                    <div>
+
+                        <h3>Make guests feel at home</h3>
+
+                        <p>
+                            Tell guests how many people your property can comfortably host.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="input-label">
+                            👥 Guests
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="listing[maxGuests]"
+                            value="2"
+                            min="1"
+                            max="20"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="input-label">
+                            🛏️ Bedrooms
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="listing[bedrooms]"
+                            value="1"
+                            min="0"
+                            max="20"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="input-label">
+                            🛌 Beds
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="listing[beds]"
+                            value="1"
+                            min="0"
+                            max="30"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-3 mb-3">
+
+                        <label class="input-label">
+                            🚿 Bathrooms
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            name="listing[bathrooms]"
+                            value="1"
+                            min="0"
+                            max="20"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- 6. AMENITIES -->
+            <!-- ========================================= -->
+
+            <div class="section-card">
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        6
+                    </div>
+
+                    <div>
+
+                        <h3>What does your place offer?</h3>
+
+                        <p>
+                            Select everything guests can use.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="amenities-grid">
+
+
+                    <label class="amenity">
+
+                        <input
+                            type="checkbox"
+                            name="listing[amenities][]"
+                            value="WiFi"
+                        >
+
+                        📶 Wi-Fi
+
+                    </label>
+
+
+                    <label class="amenity">
+
+                        <input
+                            type="checkbox"
+                            name="listing[amenities][]"
+                            value="Air Conditioning"
+                        >
+
+                        ❄️ Air Conditioning
+
+                    </label>
+
+
+                    <label class="amenity">
+
+                        <input
+                            type="checkbox"
+                            name="listing[amenities][]"
+                            value="Kitchen"
+                        >
+
+                        🍳 Kitchen
+
+                    </label>
+
+
+                    <label class="amenity">
+
+                        <input
+                            type="checkbox"
+                            name="listing[amenities][]"
+                            value="Parking"
+                        >
+
+                        🚗 Free Parking
+
+                    </label>
+
+
+                    <label class="amenity">
+
+                        <input
+                            type="checkbox"
+                            name="listing[amenities][]"
+                            value="Pool"
+                        >
+
+                        🏊 Swimming Pool
+
+                    </label>
+
+
+                    <label class="amenity">
+
+                        <input
+                            type="checkbox"
+                            name="listing[amenities][]"
+                            value="TV"
+                        >
+
+                        📺 TV
+
+                    </label>
+
+
+                    <label class="amenity">
+
+                        <input
+                            type="checkbox"
+                            name="listing[amenities][]"
+                            value="Workspace"
+                        >
+
+                        💻 Workspace
+
+                    </label>
+
+
+                    <label class="amenity">
+
+                        <input
+                            type="checkbox"
+                            name="listing[amenities][]"
+                            value="Washer"
+                        >
+
+                        🧺 Washer
+
+                    </label>
+
+
+                    <label class="amenity">
+
+                        <input
+                            type="checkbox"
+                            name="listing[amenities][]"
+                            value="Balcony"
+                        >
+
+                        🌇 Balcony
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- 7. HOSTING DETAILS -->
+            <!-- ========================================= -->
+
+            <div class="section-card">
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        7
+                    </div>
+
+                    <div>
+
+                        <h3>Set your hosting preferences</h3>
+
+                        <p>
+                            Give guests an idea of your schedule.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <label class="input-label">
+                            Check-in time
+                        </label>
+
+                        <input
+                            type="time"
+                            class="form-control"
+                            name="listing[checkInTime]"
+                            value="14:00"
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <label class="input-label">
+                            Check-out time
+                        </label>
+
+                        <input
+                            type="time"
+                            class="form-control"
+                            name="listing[checkOutTime]"
+                            value="11:00"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- 8. PRICE -->
+            <!-- ========================================= -->
+
+            <div class="section-card">
+
+                <div class="section-title">
+
+                    <div class="section-number">
+                        8
+                    </div>
+
+                    <div>
+
+                        <h3>Set your nightly price</h3>
+
+                        <p>
+                            You can change this later.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row justify-content-center">
+
+                    <div class="col-md-6">
+
+                        <label class="input-label">
+                            Price per night
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                ₹
+                            </span>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                name="listing[price]"
+                                placeholder="5000"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- PUBLISH -->
+            <!-- ========================================= -->
+
+            <div class="publish-box">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-8">
+
+                        <strong>
+                            Ready to welcome travellers? 🚀
+                        </strong>
+
+                        <div class="text-muted small">
+                            Your listing will appear on Wanderlust immediately.
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4 mt-3 mt-md-0">
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark publish-btn"
+                        >
+
+                            <i class="fa-solid fa-rocket"></i>
+
+                            Publish Listing
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- LEAFLET -->
+<!-- ========================================= -->
+
+<link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+
+<script>
+
+    // =========================================
+    // IMAGE PREVIEW
+    // =========================================
+
+    const imageInput =
+        document.getElementById("image");
+
+    const imagePreview =
+        document.getElementById("imagePreview");
+
+
+    imageInput.addEventListener(
+        "change",
+        function () {
+
+            const file =
+                this.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function (event) {
+
+                    imagePreview.src =
+                        event.target.result;
+
+                    imagePreview.style.display =
+                        "block";
+                };
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+    // =========================================
+    // LOCATION PREVIEW
+    // =========================================
+
+    const locationInput =
+        document.getElementById("location");
+
+    const countryInput =
+        document.getElementById("country");
+
+    const previewMap =
+        document.getElementById("previewMap");
+
+    let map = null;
+
+
+    async function updatePreviewMap() {
+
+        const location =
+            locationInput.value.trim();
+
+        const country =
+            countryInput.value.trim();
+
+
+        if (
+            location.length < 3 ||
+            country.length < 2
+        ) {
+
+            return;
+        }
+
+
+        try {
+
+            const query =
+                encodeURIComponent(
+                    `${location}, ${country}`
+                );
+
+
+            const response =
+                await fetch(
+                    `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${query}`,
+                    {
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        }
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !data ||
+                data.length === 0
+            ) {
+
+                return;
+            }
+
+
+            const latitude =
+                parseFloat(
+                    data[0].lat
+                );
+
+            const longitude =
+                parseFloat(
+                    data[0].lon
+                );
+
+
+            previewMap.style.display =
+                "block";
+
+
+            if (!map) {
+
+                map =
+                    L.map(
+                        "previewMap"
+                    ).setView(
+                        [
+                            latitude,
+                            longitude
+                        ],
+                        12
+                    );
+
+
+                L.tileLayer(
+                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    {
+                        attribution:
+                            "&copy; OpenStreetMap contributors"
+                    }
+                ).addTo(map);
+
+            } else {
+
+                map.setView(
+                    [
+                        latitude,
+                        longitude
+                    ],
+                    12
+                );
+
+            }
+
+
+            L.marker(
+                [
+                    latitude,
+                    longitude
+                ]
+            )
+            .addTo(map)
+            .bindPopup(
+                `<strong>${location}</strong><br>${country}`
+            )
+            .openPopup();
+
+
+        } catch (error) {
+
+            console.log(
+                "Map preview error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    let locationTimer;
+
+
+    function scheduleMapUpdate() {
+
+        clearTimeout(
+            locationTimer
+        );
+
+        locationTimer =
+            setTimeout(
+                updatePreviewMap,
+                800
+            );
+
+    }
+
+
+    locationInput.addEventListener(
+        "input",
+        scheduleMapUpdate
+    );
+
+
+    countryInput.addEventListener(
+        "input",
+        scheduleMapUpdate
+    );
+
+
+</script>
