@@ -647,85 +647,99 @@ async function getCoordinates(
 // ==================================================
 // WEATHER
 // ==================================================
-
-async function getWeather(
-    latitude,
-    longitude
-) {
+async function getWeather(latitude, longitude) {
 
     try {
 
+        console.log("WEATHER REQUEST:");
+        console.log("Latitude:", latitude);
+        console.log("Longitude:", longitude);
+
         if (
-            !Number.isFinite(
-                latitude
-            ) ||
-            !Number.isFinite(
-                longitude
-            )
+            !Number.isFinite(latitude) ||
+            !Number.isFinite(longitude)
         ) {
+
+            console.log(
+                "WEATHER ERROR: Invalid coordinates"
+            );
 
             return null;
 
         }
 
+        const response = await axios.get(
+            "https://api.open-meteo.com/v1/forecast",
+            {
+                params: {
+                    latitude: latitude,
+                    longitude: longitude,
 
-        const response =
-            await axios.get(
+                    daily: [
+                        "weather_code",
+                        "temperature_2m_max",
+                        "temperature_2m_min",
+                        "precipitation_probability_max",
+                        "wind_speed_10m_max"
+                    ].join(","),
 
-                "https://api.open-meteo.com/v1/forecast",
+                    timezone: "auto",
 
-                {
+                    forecast_days: 7
+                },
 
-                    params: {
+                timeout: 15000
+            }
+        );
 
-                        latitude,
+        console.log(
+            "WEATHER STATUS:",
+            response.status
+        );
 
-                        longitude,
-
-                        daily: [
-
-                            "weather_code",
-
-                            "temperature_2m_max",
-
-                            "temperature_2m_min",
-
-                            "precipitation_probability_max",
-
-                            "wind_speed_10m_max"
-
-                        ].join(","),
-
-                        timezone:
-                            "auto",
-
-                        forecast_days:
-                            7
-
-                    },
-
-                    timeout: 10000
-
-                }
-
-            );
-
+        console.log(
+            "WEATHER DATA RECEIVED:",
+            Boolean(response.data)
+        );
 
         return response.data;
 
     } catch (error) {
 
         console.log(
-            "Weather API error:",
+            "================================"
+        );
+
+        console.log(
+            "WEATHER API ERROR"
+        );
+
+        console.log(
+            "Message:",
             error.message
         );
 
+        if (error.response) {
+
+            console.log(
+                "Status:",
+                error.response.status
+            );
+
+            console.log(
+                "Response:",
+                error.response.data
+            );
+
+        }
+
+        console.log(
+            "================================"
+        );
+
         return null;
-
     }
-
 }
-
 
 // ==================================================
 // WEATHER DESCRIPTION
